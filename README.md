@@ -10,5 +10,5 @@ These can be found at
 BepInEx\core\0Harmony.dll
 BepInEx\core\BepInEx.dll
 valheim_Data\Managed\assembly_valheim.dll
-unstripped_corlib\UnityEngine.dll
-unstripped_corlib\UnityEngine.CoreModule.dll
+valheim_Data\Managed\UnityEngine.dll
+valheim_Data\Managed\UnityEngine.CoreModule.dll

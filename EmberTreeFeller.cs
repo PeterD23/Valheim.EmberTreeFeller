@@ -18,13 +18,13 @@ namespace EmberTreeFeller
             Logs = Logger;
             Logs.LogInfo("Ready to blow up some trees!");
         }
-		
-		// Theoretical maximum of 180 chop at level 100 o.o
+
+        // Theoretical maximum of 180 chop at level 100 o.o
 
         [HarmonyPatch(typeof(ItemData))]
         class Ember_Staff_Patch
         {
-            [HarmonyPatch(nameof(ItemData.GetDamage), typeof(int))]
+            [HarmonyPatch(nameof(ItemData.GetDamage), typeof(int), typeof(float))]
             [HarmonyPostfix]
             static void PatchStaffChopDamage(ref HitData.DamageTypes __result, ref ItemData.SharedData ___m_shared)
             {
@@ -36,10 +36,10 @@ namespace EmberTreeFeller
             }
         }
 
-		// Since the Projectile OnHit() doesn't add toolTier to Hit Data, this workaround just patches in if the projectile did chop and fire damage
-		// which will logically only be the staff. All previous tiers of axes (Stone, Flint, Bronze, Iron) only do Slash + Chop so you're not in
-		// danger of illegitimately cutting Yddrassil wood with a Stone axe!
-		
+        // Since the Projectile OnHit() doesn't add toolTier to Hit Data, this workaround just patches in if the projectile did chop and fire damage
+        // which will logically only be the staff. All previous tiers of axes (Stone, Flint, Bronze, Iron) only do Slash + Chop so you're not in
+        // danger of illegitimately cutting Yddrassil wood with a Stone axe!
+
         [HarmonyPatch(typeof(TreeBase))]
         class Ember_Staff_TreeBase
         {
@@ -47,7 +47,7 @@ namespace EmberTreeFeller
             [HarmonyPrefix]
             static void PatchToolTier(ref HitData hit)
             {
-                if(hit.m_damage.m_chop > 0 && hit.m_damage.m_fire > 0)
+                if (hit.m_damage.m_chop > 0 && hit.m_damage.m_fire > 0)
                 {
                     hit.m_toolTier = 4;
                 }
